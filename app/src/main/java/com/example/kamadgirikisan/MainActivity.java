@@ -8,13 +8,15 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-//import com.example.kamadgirikisan.ui.login.LoginActivity;
+
 import com.example.kamadgirikisan.ui.login.quizLoginActivity;
+import com.example.kamadgirikisan.ui.login.redempsignupActivity;
 import com.example.kamadgirikisan.ui.login.redemptionLoginActivity;
+
 
 public class MainActivity extends AppCompatActivity {
     ImageView quiz,redemption;
-    Intent quizIntent;
+    Intent quizIntent, redempIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,16 +35,16 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 quizIntent = new Intent(MainActivity.this, quizLoginActivity.class);
                 startActivity(quizIntent);
-                Toast.makeText(MainActivity.this, "quiz clicked", Toast.LENGTH_LONG).show();
+//                Toast.makeText(MainActivity.this, "quiz clicked", Toast.LENGTH_LONG).show();
             }
         });
 
         redemption.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                quizIntent = new Intent(MainActivity.this, redempsignup.class);
-                startActivity(quizIntent);
-                Toast.makeText(MainActivity.this, "redemption clicked", Toast.LENGTH_LONG).show();
+                redempIntent = new Intent(MainActivity.this, redemptionLoginActivity.class );
+                startActivity(redempIntent);
+//                Toast.makeText(MainActivity.this, "redemption clicked", Toast.LENGTH_LONG).show();
             }
         });
     }

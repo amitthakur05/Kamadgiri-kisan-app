@@ -34,6 +34,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
+        android:maxLength="10"
         android:background="@drawable/mobilebg"
         android:ems="10"
         android:paddingLeft="30dp"
@@ -69,29 +70,45 @@
         android:imeActionLabel="@string/action_sign_in_short"
         android:imeOptions="actionDone"
         android:inputType="textPassword"
+        android:maxLength="5"
         android:selectAllOnFocus="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
-    <Button
-        android:id="@+id/login"
+
+    <TextView
+        android:id="@+id/register"
         android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_gravity="start"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="100dp"
-        android:enabled="false"
-        android:text="SignIn"
-        android:background="#32B177"
-        android:textColor="#FFFFFF"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="97dp"
+        android:layout_marginTop="23dp"
+        android:layout_marginEnd="132dp"
+        android:layout_marginBottom="166dp"
+        android:text="Do you want to register"
+        android:textColor="#FBC403"
+        android:textSize="18sp"
+        android:textStyle="normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password"
-        app:layout_constraintVertical_bias="0.2" />
+        app:layout_constraintTop_toBottomOf="@+id/textView9" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="97dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="210dp"
+        android:text="Not Register?"
+        android:textColor="#0F4C30"
+        android:textSize="18sp"
+        android:textStyle="normal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.333"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button2" />
 
     <ProgressBar
         android:id="@+id/loading"
@@ -108,4 +125,18 @@
         app:layout_constraintStart_toStartOf="@+id/password"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.3" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="20dp"
+        android:background="#32B177"
+        android:text="Login"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/password" />
 </androidx.constraintlayout.widget.ConstraintLayout>
