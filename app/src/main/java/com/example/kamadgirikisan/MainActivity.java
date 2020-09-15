@@ -3,6 +3,7 @@ package com.example.kamadgirikisan;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -29,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         quiz = findViewById(R.id.quiz);
         redemption = findViewById(R.id.redemption);
+
 
         quiz.setOnClickListener(new View.OnClickListener() {
             @Override
