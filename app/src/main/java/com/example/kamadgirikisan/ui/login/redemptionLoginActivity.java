@@ -77,13 +77,6 @@ public class redemptionLoginActivity extends AppCompatActivity {
          loginButton= findViewById(R.id.button2);
          loadingProgressBar = findViewById(R.id.loading);
         final TextView register = findViewById(R.id.register);
-        SharedPreferences settings = getApplicationContext().getSharedPreferences("userRedmp", MODE_PRIVATE);
-        String userId = settings.getString("userId","0");
-        String name = settings.getString("name","unknown");
-        if(!userId.equals("0") && !name.equals("unknown")) {
-            Intent intent = new Intent(redemptionLoginActivity.this, redmptionHome.class);
-            startActivity(intent);
-        }
 
         register.setOnClickListener(new View.OnClickListener() {
             @Override

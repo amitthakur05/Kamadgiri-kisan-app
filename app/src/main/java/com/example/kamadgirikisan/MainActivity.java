@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
         quiz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 quizIntent = new Intent(MainActivity.this, quizLoginActivity.class);
                 startActivity(quizIntent);
 //                Toast.makeText(MainActivity.this, "quiz clicked", Toast.LENGTH_LONG).show();
@@ -44,8 +45,18 @@ public class MainActivity extends AppCompatActivity {
         redemption.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                redempIntent = new Intent(MainActivity.this, redemptionLoginActivity.class );
-                startActivity(redempIntent);
+                SharedPreferences settings = getApplicationContext().getSharedPreferences("userRedmp", MODE_PRIVATE);
+                String userId = settings.getString("userId","0");
+                String name = settings.getString("name","unknown");
+                if(!userId.equals("0") && !name.equals("unknown")) {
+//                    Toast.makeText(MainActivity.this, "entered", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(MainActivity.this, redmptionHome.class);
+                    startActivity(intent);
+                }
+                else {
+                    redempIntent = new Intent(MainActivity.this, redemptionLoginActivity.class);
+                    startActivity(redempIntent);
+                }
 //                Toast.makeText(MainActivity.this, "redemption clicked", Toast.LENGTH_LONG).show();
             }
         });

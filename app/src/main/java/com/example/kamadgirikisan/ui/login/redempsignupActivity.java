@@ -128,83 +128,30 @@ public class redempsignupActivity extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        //you will get your response in log
-//                        Toast.makeText(redempsignupActivity.this, "Thank you for your post1" + response.toString(), Toast.LENGTH_SHORT).show();
-
-//                        Iterator<String> iter = json.keys();
-//                        while (iter.hasNext()) {
-//                            String key = iter.next();
-//                            try {
-//                                Object value = json.get(key);
-//                            } catch (JSONException e) {
-//                                // Something went wrong!
-//                            }
-//                        }
-//                        if (user.equals("") || pass.equals("")) {
-//
-//                            Toast.makeText(getApplicationContext(), "username or password is empty", Toast.LENGTH_LONG).show();
-//                        } else if (!response.equals("empty")) {
-//                            Log.e("isempty", "yes");
                         try {
                             JSONObject jsonObject = new JSONObject(response.trim());
 
                             for (int i = 0; i < jsonObject.names().length(); i++) {
-//                                Snackbar snackbar = Snackbar
-//                                        .make(parentLayout, "" + jsonObject.names().length() + "    " + jsonObject.get(jsonObject.names().getString(i)), Snackbar.LENGTH_LONG);
-//                                snackbar.show();
-
-
-//                                Toast.makeText(redempsignupActivity.this, "key = " + jsonObject.names().getString(i) + " value = " + jsonObject.get(jsonObject.names().getString(i)), Toast.LENGTH_SHORT).show();
-
                                          snackbar = Snackbar
                                         .make(parentLayout, "" + jsonObject.get(jsonObject.names().getString(i)), Snackbar.LENGTH_INDEFINITE)
                                         .setAction("Okay", new View.OnClickListener() {
                                             @Override
                                             public void onClick(View view) {
-
                                                 Intent intent = new Intent(redempsignupActivity.this, MainActivity .class);
                                                 startActivity(intent);
                                                 finish();
-
-//                                                Snackbar mSnackbar = Snackbar.make(mainLayout, "Message successfully deleted.", Snackbar.LENGTH_SHORT);
-//                                                mSnackbar.show();
                                             }
                                         });
                                 View snackbarView = snackbar.getView();
                                 TextView snackTextView = (TextView) snackbarView.findViewById(com.google.android.material.R.id.snackbar_text);
                                 snackTextView.setMaxLines(7);
-
                                 snackbar.show();
-
                             }
                         }
                         catch (Exception e) {
                             e.printStackTrace();
 
                         }
-//
-//                            try {
-//                                Toast.makeText(redempsignupActivity.this, "new array"+response, Toast.LENGTH_SHORT).show();
-//                                JSONArray array = new JSONArray(response);
-//                                Toast.makeText(redempsignupActivity.this, "new array"+array, Toast.LENGTH_SHORT).show();
-//                                for (int i = 0; i < array.length(); i++) {
-//                                    JSONArray array1 = array.getJSONObject(i).getJSONArray("user");
-//                                    for (int j = 0; j < array1.length(); j++) {
-//
-//
-////                                        startActivity(intent);
-//                                    }
-//                                }
-//                            } catch (JSONException e) {
-//                                e.printStackTrace();
-//                            }
-//
-//                        } else {
-//                            Log.e("isempty", "else");
-//                            Toast.makeText(getApplicationContext(), "Username or password is incorrect", Toast.LENGTH_LONG).show();
-//                        }
-//
-
                     }
                 },
                 new Response.ErrorListener() {
@@ -216,9 +163,6 @@ public class redempsignupActivity extends AppCompatActivity {
                                     @Override
                                     public void onClick(View view) {
                                       signUp();
-
-//                                                Snackbar mSnackbar = Snackbar.make(mainLayout, "Message successfully deleted.", Snackbar.LENGTH_SHORT);
-//                                                mSnackbar.show();
                                     }
                                 });
 

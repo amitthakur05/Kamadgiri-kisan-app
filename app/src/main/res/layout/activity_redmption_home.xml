@@ -23,13 +23,15 @@
             android:id="@+id/textView8"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Welcome ," />
+            android:textColor="#000000"
+            android:text="Welcome ,  " />
 
         <TextView
             android:id="@+id/textView16"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:textColor="#E94C3D"
+            />
 
     </LinearLayout>
 
@@ -56,69 +58,81 @@
         app:layout_constraintTop_toBottomOf="@+id/divider" >
 
         <TableLayout
-            android:layout_centerHorizontal="true"
+            android:id="@+id/tableLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true">
 
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
 
-                android:gravity="center"
                 android:layout_marginTop="40dp"
-               >
+                android:gravity="center">
 
                 <Button
                     android:id="@+id/button3"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#F36630"
+                    android:layout_height="35dp"
+                    android:layout_gravity="center"
+                    android:background="#E07A4C"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
-                    android:textSize="13dp"
                     android:text="Previous Label No"
-                    android:layout_gravity="center"
                     android:textAlignment="center"
-                    android:textColor="#FFFFFF" />
+                    android:textColor="#FFFFFF"
+                    android:textSize="13dp" />
             </TableRow>
 
             <TableRow
-                android:layout_marginTop="40dp"
-                android:gravity="center"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" >
+                android:layout_height="match_parent"
+                android:layout_marginTop="40dp"
+                android:gravity="center">
 
                 <EditText
                     android:id="@+id/editTextTextPersonName2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:textSize="13dp"
                     android:hint="Enter label Number"
-                    android:textColor="#0A0B0D"
                     android:inputType="number"
-                     />
+                    android:maxLength="7"
+                    android:textColor="#0A0B0D"
+                    android:textSize="13dp" />
+
             </TableRow>
 
             <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_marginTop="40dp"
                 android:layout_marginBottom="40dp"
-                android:gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" >
+                android:gravity="center">
 
                 <Button
-                    android:layout_gravity="center"
                     android:id="@+id/button4"
-                    android:background="#A5991F"
-                    android:textColor="#FFFFFF"
-                    android:textSize="13dp"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Submit" />
+                    android:layout_height="35dp"
+                    android:layout_gravity="center"
+                    android:background="#A5991F"
+                    android:text="Submit"
+                    android:textColor="#FFFFFF"
+                    android:textSize="13dp" />
             </TableRow>
 
         </TableLayout>
+
+        <ProgressBar
+            android:id="@+id/progressBar3"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:layout_gravity="center"
+            app:layout_constraintEnd_toStartOf="@+id/tableLayout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.cardview.widget.CardView>
 
