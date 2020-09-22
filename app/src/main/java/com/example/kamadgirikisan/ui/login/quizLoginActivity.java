@@ -24,11 +24,31 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.kamadgirikisan.R;
 import com.example.kamadgirikisan.ui.login.LoginViewModel;
 import com.example.kamadgirikisan.ui.login.LoginViewModelFactory;
+import com.google.android.material.snackbar.Snackbar;
+
+import org.json.JSONObject;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class quizLoginActivity extends AppCompatActivity {
+    ProgressBar loadingProgressBar;
+    Button loginButton;
+    EditText mobileNumber, ksc, name, villageName;
+    String url ="http://148.72.213.116:3000/api/user/register";
+    Snackbar snackbar;
+    RequestQueue queue;
 
     private LoginViewModel loginViewModel;
 
@@ -41,100 +61,95 @@ public class quizLoginActivity extends AppCompatActivity {
         }
         catch (NullPointerException e){}
         setContentView(R.layout.activity_quiz_login);
-        loginViewModel = ViewModelProviders.of(this, new LoginViewModelFactory())
-                .get(LoginViewModel.class);
+        mobileNumber = findViewById(R.id.editTextPhone);
+        ksc = findViewById(R.id.password);
+        name = findViewById(R.id.editTextTextPersonName);
+        villageName = findViewById(R.id.editTextTextPostalAddress);
+        loginButton = findViewById(R.id.logbtn);
+        loadingProgressBar = findViewById(R.id.loading);
 
-//        final EditText usernameEditText = findViewById(R.id.username);
-        final EditText passwordEditText = findViewById(R.id.password);
-        final Button loginButton = findViewById(R.id.login);
-//        loginButton.getBackground().setColorFilter(0xFF00FF00, PorterDuff.Mode.MULTIPLY);
-
-        final ProgressBar loadingProgressBar = findViewById(R.id.loading);
-
-        loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
-            @Override
-            public void onChanged(@Nullable LoginFormState loginFormState) {
-                if (loginFormState == null) {
-                    return;
-                }
-                loginButton.setEnabled(loginFormState.isDataValid());
-                if (loginFormState.getUsernameError() != null) {
-//                    usernameEditText.setError(getString(loginFormState.getUsernameError()));
-                }
-                if (loginFormState.getPasswordError() != null) {
-                    passwordEditText.setError(getString(loginFormState.getPasswordError()));
-                }
-            }
-        });
-
-        loginViewModel.getLoginResult().observe(this, new Observer<LoginResult>() {
-            @Override
-            public void onChanged(@Nullable LoginResult loginResult) {
-                if (loginResult == null) {
-                    return;
-                }
-                loadingProgressBar.setVisibility(View.GONE);
-                if (loginResult.getError() != null) {
-                    showLoginFailed(loginResult.getError());
-                }
-                if (loginResult.getSuccess() != null) {
-                    updateUiWithUser(loginResult.getSuccess());
-                }
-                setResult(Activity.RESULT_OK);
-
-                //Complete and destroy login activity once successful
-                finish();
-            }
-        });
-
-        TextWatcher afterTextChangedListener = new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                // ignore
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                // ignore
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-//                loginViewModel.loginDataChanged(usernameEditText.getText().toString(),
-//                        passwordEditText.getText().toString());
-            }
-        };
-//        usernameEditText.addTextChangedListener(afterTextChangedListener);
-//        passwordEditText.addTextChangedListener(afterTextChangedListener);
-//        passwordEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-//
-//            @Override
-//            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-//                if (actionId == EditorInfo.IME_ACTION_DONE) {
-//                    loginViewModel.login(usernameEditText.getText().toString(),
-//                            passwordEditText.getText().toString());
-//                }
-//                return false;
-//            }
-//        });
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadingProgressBar.setVisibility(View.VISIBLE);
-//                loginViewModel.login(usernameEditText.getText().toString(),
-//                        passwordEditText.getText().toString());
+//                Toast.makeText(quizLoginActivity.this, "clicked", Toast.LENGTH_SHORT).show();
+                if(mobileNumber.getText().toString().trim().equals("")) {
+                    mobileNumber.setError("please enter mobile number");
+                    mobileNumber.requestFocus();
+                }
+                if(mobileNumber.getText().toString().length()<10) {
+                    mobileNumber.setError("please enter valid mobile number");
+                }
+                if(ksc.getText().toString().trim().equals("")) {
+                    ksc.setError("please enter kisan sahayak code");
+                    ksc.requestFocus();
+                }
+                if(ksc.getText().toString().length()<4) {
+                    ksc.setError("please enter valid kisan sahayak code");
+                    ksc.requestFocus();
+                }
+                if(name.getText().toString().trim().equals("")) {
+                    name.setError("please enter the farmer name");
+                    ksc.requestFocus();
+                }
+                if(villageName.getText().toString().trim().equals("")) {
+                    villageName.setError("please enter the village name");
+                    villageName.requestFocus();
+                }
+                if(!mobileNumber.getText().toString().trim().equals("") && mobileNumber.getText().toString().length()==10 && !ksc.getText().toString().trim().equals("")
+                        && ksc.getText().toString().length()==4 && !name.getText().toString().trim().equals("") && !villageName.getText().toString().trim().equals("")) {
+//                    Toast.makeText(quizLoginActivity.this, "true", Toast.LENGTH_SHORT).show();
+                    loadingProgressBar.setVisibility(View.VISIBLE);
+                    login();
+                }
             }
         });
+
+
     }
 
-    private void updateUiWithUser(LoggedInUserView model) {
-        String welcome = getString(R.string.welcome) + model.getDisplayName();
-        // TODO : initiate successful logged in experience
-        Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
+    public void login() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            loadingProgressBar.setVisibility(View.GONE);
+                            JSONObject jsonObject = new JSONObject(response.trim());
+                            if(jsonObject.length()==1 && jsonObject.names().getString(0).equals("msg")) {
+                                Toast.makeText(quizLoginActivity.this, ""+jsonObject.get(jsonObject.names().getString(0)), Toast.LENGTH_LONG).show();
+                            }
+                            if(jsonObject.length()>1 && jsonObject.names().getString(0).equals("isActive")) {
+                                Toast.makeText(quizLoginActivity.this, "Login Successful", Toast.LENGTH_LONG).show();
+                            }
+//                            Toast.makeText(quizLoginActivity.this, "data" + jsonObject.length(), Toast.LENGTH_LONG).show();
+                        } catch (Exception e) {
+
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                })
+        {
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new LinkedHashMap<>();
+                params.put("mobileNumber", mobileNumber.getText().toString());
+                params.put("dealerCode", ksc.getText().toString());
+                params.put("name", name.getText().toString());
+                params.put("address",villageName.getText().toString());
+                return params;
+            }
+        };
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 30, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        if (queue == null) {
+            queue = Volley.newRequestQueue(getApplicationContext());
+        }
+        queue.add(stringRequest);
+        stringRequest.setTag("TAG");
     }
 
-    private void showLoginFailed(@StringRes Integer errorString) {
-        Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
-    }
 }
