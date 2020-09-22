@@ -53,13 +53,28 @@ public class labelHistory extends AppCompatActivity {
                    @Override
                    public void onResponse(String response) {
                        try {
-//                           Toast.makeText(labelHistory.this, "data" + response, Toast.LENGTH_LONG).show(
+//                           Toast.makeText(labelHistory.this, "data" + response, Toast.LENGTH_LONG).show();
 
                            JSONObject jsonObject = new JSONObject(response.trim());
+
                            JSONArray items = jsonObject.getJSONArray("items");
 
-//                           Toast.makeText(labelHistory.this, "data" + recs.length(), Toast.LENGTH_LONG).show();
+//                           Toast.makeText(labelHistory.this, "data" + items.length(), Toast.LENGTH_LONG).show();
                            TableLayout prices = (TableLayout)findViewById(R.id.labelNo);
+                           if(items.length()<1) {
+                               TextView data = new TextView(labelHistory.this);
+                               data.setText(" No record found ");
+                               data.setTextColor(Color.rgb(255,69,0));
+//                           h2.setBackgroundColor(Color.WHITE);
+                               data.setTextSize(18);
+                               data.setHeight(80);
+                               TableRow th3 =  new TableRow(labelHistory.this);
+                               th3.addView(data);
+//                           th1.setBackgroundColor(Color.YELLOW);
+                               prices.addView(th3);
+                               prices.setPadding(140,100,10,10);
+                               return;
+                           }
                            TextView h1 = new TextView(labelHistory.this);
                            h1.setText(" Label No. ");
                            h1.setTextColor(Color.BLACK);

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -18,6 +19,7 @@ import com.example.kamadgirikisan.ui.login.redemptionLoginActivity;
 public class MainActivity extends AppCompatActivity {
     ImageView quiz,redemption;
     Intent quizIntent, redempIntent;
+    boolean doubleBackToExitPressedOnce = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
                 String userId = settings.getString("userId","0");
                 String name = settings.getString("name","unknown");
                 if(!userId.equals("0") && !name.equals("unknown")) {
-//                    Toast.makeText(MainActivity.this, "entered", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(MainActivity.this, "entered"+userId+na, Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(MainActivity.this, redmptionHome.class);
                     startActivity(intent);
                 }
@@ -60,6 +62,25 @@ public class MainActivity extends AppCompatActivity {
 //                Toast.makeText(MainActivity.this, "redemption clicked", Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce=false;
+            }
+        }, 2000);
     }
 
 

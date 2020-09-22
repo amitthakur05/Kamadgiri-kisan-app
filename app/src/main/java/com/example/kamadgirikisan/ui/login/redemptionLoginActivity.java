@@ -156,7 +156,8 @@ public class redemptionLoginActivity extends AppCompatActivity {
                                             SharedPreferences.Editor editor = mPreferences.edit();
                                             editor.putString("name", userDetails.get(userDetails.names().getString(j)).toString());
                                             editor.apply();
-                                            Toast.makeText(redemptionLoginActivity.this, "Login Successful" + userDetails.get(userDetails.names().getString(j)).toString(), Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(redemptionLoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                                            finish();
                                             Intent intent = new Intent(redemptionLoginActivity.this, redmptionHome.class);
                                             startActivity(intent);
                                         }

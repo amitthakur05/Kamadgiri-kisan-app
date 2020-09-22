@@ -1,5 +1,6 @@
 package com.example.kamadgirikisan;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -32,7 +33,7 @@ public class redmptionHome extends AppCompatActivity {
 TextView userName;
 EditText labelNo;
 Snackbar snackbar;
-Button submit,previousLabelNo;
+Button submit,previousLabelNo,logout;
 String userId;
 RequestQueue queue;
 ProgressBar progressBar;
@@ -45,9 +46,9 @@ String url = "http://148.72.213.116:3000/api/redimption/addSerialNo";
         } catch (NullPointerException e) {
         }
         setContentView(R.layout.activity_redmption_home);
-        SharedPreferences settings = getApplicationContext().getSharedPreferences("userRedmp", MODE_PRIVATE);
-        userId = settings.getString("userId","0");
-        String name = settings.getString("name","unknown");
+        final SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("userRedmp", MODE_PRIVATE);
+        userId = sharedPreferences.getString("userId","0");
+        String name = sharedPreferences.getString("name","unknown");
         userName = findViewById(R.id.textView16);
         labelNo = findViewById(R.id.editTextTextPersonName2);
         submit = findViewById(R.id.button4);
@@ -55,6 +56,7 @@ String url = "http://148.72.213.116:3000/api/redimption/addSerialNo";
         progressBar = findViewById(R.id.progressBar3);
         progressBar.setVisibility(View.GONE);
         previousLabelNo = findViewById(R.id.button3);
+        logout = findViewById(R.id.logout);
 
         previousLabelNo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,8 +86,19 @@ String url = "http://148.72.213.116:3000/api/redimption/addSerialNo";
         });
 
 
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sharedPreferences.edit().remove("userId").commit();
+                sharedPreferences.edit().remove("name").commit();
+                finish();
+//                Intent intent = new Intent(redmptionHome.this,redemptionLoginActivity.class);
+//                startActivity(intent);
+            }
+        });
 
-//        Toast.makeText(this, "userId    "+userId+""+name, Toast.LENGTH_SHORT).show();
+
+
     }
     public void submit() {
 
@@ -152,4 +165,10 @@ String url = "http://148.72.213.116:3000/api/redimption/addSerialNo";
         queue.add(stringRequest);
         stringRequest.setTag("TAG");
     }
+//    @Override
+//    public void onBackPressed() {
+//        Intent intent = new Intent(redmptionHome.this,MainActivity.class);
+//        startActivity(intent);
+//        finish();
+//    }
 }
