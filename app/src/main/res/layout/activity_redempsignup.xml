@@ -32,7 +32,7 @@
                 android:id="@+id/textView10"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Mobile Number"
+                android:text="मोबाइल नंबर"
                 android:textColor="@android:color/white"
                 android:textSize="16sp" />
             </TableRow>
@@ -58,7 +58,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
-                android:text="Name"
+                android:text="किसान का नाम"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="15dp"
                 android:textColor="@android:color/white" />
@@ -83,7 +83,7 @@
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
                 android:textSize="16sp"
-                android:text="Father's Name"
+                android:text="पिता का नाम"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="15dp"
                 android:textColor="@android:color/white" />
@@ -108,7 +108,7 @@
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
                 android:textSize="16sp"
-                android:text="Village Name"
+                android:text="गाँव का नाम"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="15dp"
                 android:textColor="@android:color/white" />
@@ -133,7 +133,7 @@
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
                 android:textSize="16sp"
-                android:text="Post Office"
+                android:text="डाक घर"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="15dp"
                 android:textColor="@android:color/white"/>
@@ -158,7 +158,7 @@
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
                 android:textSize="16sp"
-                android:text="Kisan Sahayak Code"
+                android:text="किसान सहायक कोड"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="15dp"
                 android:textColor="@android:color/white" />
@@ -186,7 +186,7 @@
                     android:layout_marginTop="30dp"
                     android:layout_marginBottom="40dp"
                     android:background="#32B177"
-                    android:text="Signup"
+                    android:text="रजिस्टर करें"
                     android:textColor="#FFFFFF" />
             </TableRow>
 

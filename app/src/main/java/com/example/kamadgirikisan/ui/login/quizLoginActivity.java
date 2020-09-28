@@ -5,6 +5,10 @@ import android.app.Activity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.LightingColorFilter;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
@@ -33,6 +37,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.kamadgirikisan.R;
+import com.example.kamadgirikisan.quizHome;
 import com.example.kamadgirikisan.ui.login.LoginViewModel;
 import com.example.kamadgirikisan.ui.login.LoginViewModelFactory;
 import com.google.android.material.snackbar.Snackbar;
@@ -49,6 +54,7 @@ public class quizLoginActivity extends AppCompatActivity {
     String url ="http://148.72.213.116:3000/api/user/register";
     Snackbar snackbar;
     RequestQueue queue;
+    SharedPreferences quizsharedPreferences;
 
     private LoginViewModel loginViewModel;
 
@@ -116,11 +122,39 @@ public class quizLoginActivity extends AppCompatActivity {
                         try {
                             loadingProgressBar.setVisibility(View.GONE);
                             JSONObject jsonObject = new JSONObject(response.trim());
-                            if(jsonObject.length()==1 && jsonObject.names().getString(0).equals("msg")) {
-                                Toast.makeText(quizLoginActivity.this, ""+jsonObject.get(jsonObject.names().getString(0)), Toast.LENGTH_LONG).show();
-                            }
-                            if(jsonObject.length()>1 && jsonObject.names().getString(0).equals("isActive")) {
-                                Toast.makeText(quizLoginActivity.this, "Login Successful", Toast.LENGTH_LONG).show();
+                            for(int i=0; i<jsonObject.length(); i++) {
+
+                                if(jsonObject.length()==1 && jsonObject.names().getString(i).equals("msg")) {
+
+                                    AlertDialog.Builder builder1 = new AlertDialog.Builder(quizLoginActivity.this);
+                                    builder1.setMessage(""+jsonObject.get(jsonObject.names().getString(0)));
+                                    builder1.setCancelable(true);
+
+                                    builder1.setPositiveButton(
+                                            "OK",
+                                            new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int id) {
+                                                    dialog.cancel();
+                                                }
+                                            });
+
+                                    AlertDialog alert11 = builder1.create();
+                                    alert11.show();
+                                }
+                                if(jsonObject.length()>1) {
+                                    if(jsonObject.names().getString(i).equals("_id")) {
+//                                        Toast.makeText(quizLoginActivity.this, "" + jsonObject.get(jsonObject.names().getString(i)).toString(), Toast.LENGTH_SHORT).show();
+                                        quizsharedPreferences = getSharedPreferences("quizuser", MODE_PRIVATE);
+                                        SharedPreferences.Editor editor = quizsharedPreferences.edit();
+                                        editor.putString("userId", jsonObject.get(jsonObject.names().getString(i)).toString());
+                                        editor.apply();
+
+                                        Toast.makeText(quizLoginActivity.this, "Login Successful", Toast.LENGTH_LONG).show();
+                                        Intent intent = new Intent(quizLoginActivity.this, quizHome.class);
+                                        startActivity(intent);
+                                        finish();
+                                    }
+                                }
                             }
 //                            Toast.makeText(quizLoginActivity.this, "data" + jsonObject.length(), Toast.LENGTH_LONG).show();
                         } catch (Exception e) {

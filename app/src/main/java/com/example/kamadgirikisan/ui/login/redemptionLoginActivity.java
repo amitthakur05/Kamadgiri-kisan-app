@@ -5,6 +5,8 @@ import android.app.Activity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -171,17 +173,39 @@ public class redemptionLoginActivity extends AppCompatActivity {
 
                             }
                             else if(jsonObject.get(jsonObject.names().getString(i)).equals("401")) {
-                                snackbar = Snackbar
-                                        .make(findViewById(android.R.id.content), ""+jsonObject.get(jsonObject.names().getString(i+1)), Snackbar.LENGTH_INDEFINITE)
-                                        .setAction("Okay", new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View view) {
+                                AlertDialog.Builder builder1 = new AlertDialog.Builder(redemptionLoginActivity.this);
+                                builder1.setMessage(""+jsonObject.get(jsonObject.names().getString(i+1)));
+                                builder1.setCancelable(true);
+
+                                builder1.setPositiveButton(
+                                        "OK",
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int id) {
+                                                dialog.cancel();
                                             }
                                         });
-                                View snackbarView = snackbar.getView();
-                                TextView snackTextView = (TextView) snackbarView.findViewById(com.google.android.material.R.id.snackbar_text);
-                                snackTextView.setMaxLines(7);
-                                snackbar.show();
+//
+//                                builder1.setNegativeButton(
+//                                        "No",
+//                                        new DialogInterface.OnClickListener() {
+//                                            public void onClick(DialogInterface dialog, int id) {
+//                                                dialog.cancel();
+//                                            }
+//                                        });
+
+                                AlertDialog alert11 = builder1.create();
+                                alert11.show();
+//                                snackbar = Snackbar
+//                                        .make(findViewById(android.R.id.content), ""+jsonObject.get(jsonObject.names().getString(i+1)), Snackbar.LENGTH_INDEFINITE)
+//                                        .setAction("Okay", new View.OnClickListener() {
+//                                            @Override
+//                                            public void onClick(View view) {
+//                                            }
+//                                        });
+//                                View snackbarView = snackbar.getView();
+//                                TextView snackTextView = (TextView) snackbarView.findViewById(com.google.android.material.R.id.snackbar_text);
+//                                snackTextView.setMaxLines(7);
+//                                snackbar.show();
                             }
                             }
                         }

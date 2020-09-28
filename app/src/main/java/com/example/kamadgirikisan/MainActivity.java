@@ -37,9 +37,17 @@ public class MainActivity extends AppCompatActivity {
         quiz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                SharedPreferences quizsharedprefrence = getApplicationContext().getSharedPreferences("quizuser",MODE_PRIVATE);
+                String userId = quizsharedprefrence.getString("userId","0");
+                if(!userId.equals("0")) {
+                    Intent intent = new Intent(MainActivity.this, quizHome.class);
+                    startActivity(intent);
+                }
+                else {
+                    quizIntent = new Intent(MainActivity.this, quizLoginActivity.class);
+                    startActivity(quizIntent);
+                }
 
-                quizIntent = new Intent(MainActivity.this, quizLoginActivity.class);
-                startActivity(quizIntent);
 //                Toast.makeText(MainActivity.this, "quiz clicked", Toast.LENGTH_LONG).show();
             }
         });

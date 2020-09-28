@@ -79,7 +79,7 @@
                     android:background="#E07A4C"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
-                    android:text="Previous Label No"
+                    android:text="पिछले लेबल नंबर"
                     android:textAlignment="center"
                     android:textColor="#FFFFFF"
                     android:textSize="13dp" />
@@ -96,7 +96,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:hint="Enter label Number"
+                    android:hint="लेबल नंबर दर्ज करें"
                     android:inputType="number"
                     android:maxLength="7"
                     android:textColor="#0A0B0D"
@@ -117,7 +117,7 @@
                     android:layout_height="35dp"
                     android:layout_gravity="center"
                     android:background="#A5991F"
-                    android:text="Submit"
+                    android:text="जमा करें"
                     android:textColor="#FFFFFF"
                     android:textSize="13dp" />
             </TableRow>
@@ -139,19 +139,19 @@
 
     <Button
         android:id="@+id/logout"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="60dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="50dp"
-        android:background="#EB1F12"
-        android:text="Logout"
+        android:background="#EB1F00"
+        android:text="लॉग आउट"
         android:textColor="@android:color/white"
+        android:textSize="14dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView"
-        android:textSize="14dp"/>
+        app:layout_constraintTop_toBottomOf="@+id/cardView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

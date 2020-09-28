@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -129,23 +131,50 @@ public class redempsignupActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         try {
-                            JSONObject jsonObject = new JSONObject(response.trim());
+                            final JSONObject jsonObject = new JSONObject(response.trim());
 
                             for (int i = 0; i < jsonObject.names().length(); i++) {
-                                         snackbar = Snackbar
-                                        .make(parentLayout, "" + jsonObject.get(jsonObject.names().getString(i)), Snackbar.LENGTH_INDEFINITE)
-                                        .setAction("Okay", new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View view) {
-                                                Intent intent = new Intent(redempsignupActivity.this, MainActivity .class);
-                                                startActivity(intent);
-                                                finish();
-                                            }
-                                        });
-                                View snackbarView = snackbar.getView();
-                                TextView snackTextView = (TextView) snackbarView.findViewById(com.google.android.material.R.id.snackbar_text);
-                                snackTextView.setMaxLines(7);
-                                snackbar.show();
+                                if(jsonObject.names().getString(i).equals("msg")) {
+                                    AlertDialog.Builder builder1 = new AlertDialog.Builder(redempsignupActivity.this);
+                                    builder1.setMessage(""+jsonObject.get(jsonObject.names().getString(i)));
+                                    builder1.setCancelable(true);
+
+                                    builder1.setPositiveButton(
+                                            "OK",
+                                            new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int id) {
+                                                    dialog.cancel();
+                                                    if(jsonObject.length()>1) {
+                                                        finish();
+                                                    }
+                                                }
+                                            });
+//
+//                                builder1.setNegativeButton(
+//                                        "No",
+//                                        new DialogInterface.OnClickListener() {
+//                                            public void onClick(DialogInterface dialog, int id) {
+//                                                dialog.cancel();
+//                                            }
+//                                        });
+
+                                    AlertDialog alert11 = builder1.create();
+                                    alert11.show();
+                                }
+//                                         snackbar = Snackbar
+//                                        .make(parentLayout, "" + jsonObject.get(jsonObject.names().getString(i)), Snackbar.LENGTH_INDEFINITE)
+//                                        .setAction("Okay", new View.OnClickListener() {
+//                                            @Override
+//                                            public void onClick(View view) {
+//                                                Intent intent = new Intent(redempsignupActivity.this, MainActivity .class);
+//                                                startActivity(intent);
+//                                                finish();
+//                                            }
+//                                        });
+//                                View snackbarView = snackbar.getView();
+//                                TextView snackTextView = (TextView) snackbarView.findViewById(com.google.android.material.R.id.snackbar_text);
+//                                snackTextView.setMaxLines(7);
+//                                snackbar.show();
                             }
                         }
                         catch (Exception e) {
