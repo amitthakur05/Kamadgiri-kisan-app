@@ -127,7 +127,7 @@ public class quizHome extends AppCompatActivity {
                         try {
                             JSONArray quiz = new JSONArray(response.trim());
                             if(quiz.length()>0) {
-                                Toast.makeText(quizHome.this, ""+quiz.length(),Toast.LENGTH_LONG).show();
+                                Toast.makeText(quizHome.this, "quiz"+quiz.length(),Toast.LENGTH_LONG).show();
                             }
                         } catch (Exception e) {
 
