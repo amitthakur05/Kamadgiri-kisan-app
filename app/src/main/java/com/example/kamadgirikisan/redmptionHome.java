@@ -3,6 +3,9 @@ package com.example.kamadgirikisan;
 import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -29,6 +32,8 @@ import org.json.JSONObject;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import static com.example.kamadgirikisan.homescreen.fa;
+
 public class redmptionHome extends AppCompatActivity {
 TextView userName;
 EditText labelNo;
@@ -46,25 +51,25 @@ String url = "http://148.72.213.116:3000/api/redimption/addSerialNo";
         } catch (NullPointerException e) {
         }
         setContentView(R.layout.activity_redmption_home);
-        final SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("userRedmp", MODE_PRIVATE);
+        final SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("kisanUser", MODE_PRIVATE);
         userId = sharedPreferences.getString("userId","0");
-        String name = sharedPreferences.getString("name","unknown");
+//        String name = sharedPreferences.getString("name","unknown");
         userName = findViewById(R.id.textView16);
         labelNo = findViewById(R.id.editTextTextPersonName2);
         submit = findViewById(R.id.button4);
-        userName.setText(name.toUpperCase());
+//        userName.setText(name.toUpperCas/e());
         progressBar = findViewById(R.id.progressBar3);
         progressBar.setVisibility(View.GONE);
-        previousLabelNo = findViewById(R.id.button3);
+//        previousLabelNo = findViewById(R.id.button3);
         logout = findViewById(R.id.logout);
 
-        previousLabelNo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(redmptionHome.this,labelHistory.class);
-                startActivity(intent);
-            }
-        });
+//        previousLabelNo.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(redmptionHome.this,labelHistory.class);
+//                startActivity(intent);
+//            }
+//        });
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,9 +94,37 @@ String url = "http://148.72.213.116:3000/api/redimption/addSerialNo";
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sharedPreferences.edit().remove("userId").commit();
-                sharedPreferences.edit().remove("name").commit();
-                finish();
+                AlertDialog.Builder builder1 = new AlertDialog.Builder(redmptionHome.this);
+                builder1.setMessage("Are you sure,You want to logout?").setTitle( "Kamadgiri Kisan" );
+                builder1.setCancelable(true);
+
+                builder1.setPositiveButton(
+                        "Confirm",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                sharedPreferences.edit().remove("userId").commit();
+                                sharedPreferences.edit().remove("name").commit();
+                                dialog.cancel();
+                                fa.finish();
+                                Intent intent = new Intent(redmptionHome.this, loginActivity.class);
+                                startActivity(intent);
+                                finish();
+
+
+                            }
+                        });
+                                builder1.setNegativeButton(
+                                        "Cancel",
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int id) {
+                                                dialog.cancel();
+                                            }
+                                        });
+
+                AlertDialog alert11 = builder1.create();
+                alert11.show();
+
+
 //                Intent intent = new Intent(redmptionHome.this,redemptionLoginActivity.class);
 //                startActivity(intent);
             }

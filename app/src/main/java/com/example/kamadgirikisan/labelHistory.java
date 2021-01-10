@@ -8,7 +8,9 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.style.DrawableMarginSpan;
+import android.util.Log;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -33,6 +35,7 @@ public class labelHistory extends AppCompatActivity {
     String url = "http://148.72.213.116:3000/api/redimption/get/serialNo";
     RequestQueue queue;
     String userId;
+    ProgressBar labelprogressbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,12 +46,14 @@ public class labelHistory extends AppCompatActivity {
         }
         catch (NullPointerException e){}
         setContentView(R.layout.activity_label_history);
-        SharedPreferences settings = getApplicationContext().getSharedPreferences("userRedmp", MODE_PRIVATE);
+        SharedPreferences settings = getApplicationContext().getSharedPreferences("kisanUser", MODE_PRIVATE);
         userId = settings.getString("userId","0");
+        labelprogressbar = findViewById(R.id.labelprogressbar);
         getUserHistory();
     }
 
    public void getUserHistory() {
+        labelprogressbar.setVisibility(View.VISIBLE);
        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                new Response.Listener<String>() {
                    @Override
@@ -56,10 +61,10 @@ public class labelHistory extends AppCompatActivity {
                        try {
                            JSONObject jsonObject = new JSONObject(response.trim());
                            JSONArray items = jsonObject.getJSONArray("items");
-                           TableLayout prices = (TableLayout)findViewById(R.id.labelNo);
+                           TableLayout tableLayout = (TableLayout)findViewById(R.id.labelNo);
                            if(items.length()<1) {
                                AlertDialog.Builder builder1 = new AlertDialog.Builder(labelHistory.this);
-                               builder1.setMessage("No record found");
+                               builder1.setMessage("No record found ").setTitle( "Kamadgiri Kisan" );
                                builder1.setCancelable(true);
 
                                builder1.setPositiveButton(
@@ -67,6 +72,7 @@ public class labelHistory extends AppCompatActivity {
                                        new DialogInterface.OnClickListener() {
                                            public void onClick(DialogInterface dialog, int id) {
                                                dialog.cancel();
+                                               finish();
                                            }
                                        });
 
@@ -74,29 +80,30 @@ public class labelHistory extends AppCompatActivity {
                                alert11.show();
                                return;
                            }
-                           TextView h1 = new TextView(labelHistory.this);
-                           h1.setText(" Label No. ");
-                           h1.setTextColor(Color.BLACK);
-                           TextView h2 = new TextView(labelHistory.this);
-                           h2.setText(" Status ");
-                           h2.setTextColor(Color.BLACK);
-                           TextView h3 = new TextView(labelHistory.this);
-                           h3.setText(" S.no. ");
-                           h3.setTextColor(Color.BLACK);
-                           h1.setTextSize(16);
-                           h1.setHeight(80);
-                           h2.setTextSize(16);
-                           h2.setHeight(80);
-                           h3.setTextSize(16);
-                           h3.setHeight(80);
-                           TableRow th1 =  new TableRow(labelHistory.this);
-                           th1.addView(h3);
-                           th1.addView(h1);
-                           th1.addView(h2);
-                           prices.addView(th1);
-                           prices.setStretchAllColumns(true);
+//                           TextView h1 = new TextView(labelHistory.this);
+//                           h1.setText(" Label No. ");
+//                           h1.setTextColor(Color.BLACK);
+//                           TextView h2 = new TextView(labelHistory.this);
+//                           h2.setText(" Status ");
+//                           h2.setTextColor(Color.BLACK);
+//                           TextView h3 = new TextView(labelHistory.this);
+//                           h3.setText(" S.no. ");
+//                           h3.setTextColor(Color.BLACK);
+//                           h1.setTextSize(16);
+//                           h1.setHeight(80);
+//                           h2.setTextSize(16);
+//                           h2.setHeight(80);
+//                           h3.setTextSize(16);
+//                           h3.setHeight(80);
+//                           TableRow th1 =  new TableRow(labelHistory.this);
+//                           th1.addView(h3);
+//                           th1.addView(h1);
+//                           th1.addView(h2);
+//                           prices.addView(th1);
+                           tableLayout.setStretchAllColumns(true);
                            for(int i=0; i<items.length(); i++) {
                                JSONObject object = items.getJSONObject(i);
+//                               Log.v("TAG",object.toString());
 //                               if(jsonObject.names().getString(i).equals("items")) {
                                String status = object.getString("status");
                                String serialNo = object.getString("serialNo");
@@ -104,13 +111,13 @@ public class labelHistory extends AppCompatActivity {
                                TextView c1 = new TextView(labelHistory.this);
                                TextView c2 = new TextView(labelHistory.this);
                                TextView c3 = new TextView(labelHistory.this);
-                               c2.setTextColor(Color.WHITE);
+                               c2.setTextColor(Color.BLACK);
                                c2.setTextSize(16);
                                c2.setHeight(80);
-                               c1.setTextColor(Color.WHITE);
+                               c1.setTextColor(Color.BLACK);
                                c1.setTextSize(16);
                                c1.setHeight(80);
-                               c3.setTextColor(Color.WHITE);
+                               c3.setTextColor(Color.BLACK);
                                c3.setTextSize(16);
                                c3.setHeight(80);
                                c3.setText(""+i);
@@ -119,8 +126,11 @@ public class labelHistory extends AppCompatActivity {
                                tr.addView(c3);
                                tr.addView(c1);
                                tr.addView(c2);
-                               prices.addView(tr);
-                               Toast.makeText(labelHistory.this, "data"+status+serialNo , Toast.LENGTH_LONG).show();
+                               c1.setPadding(140,0,0,0);
+                               c2.setPadding(120,0,0,0);
+                               tableLayout.addView(tr);
+                               labelprogressbar.setVisibility(View.INVISIBLE);
+//                               Toast.makeTex/t(labelHistory.this, "data"+status+serialNo , Toast.LENGTH_LONG).show();
                            }
                        } catch (Exception e) {
                            e.printStackTrace();
