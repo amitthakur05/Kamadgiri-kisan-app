@@ -63,7 +63,7 @@ public class products extends AppCompatActivity  {
                             for(int i=0; i<jsonArray.length(); i++) {
                                 productModel products = new productModel();
                                 Log.v("TEST PTOOOOOOO",jsonArray.getJSONObject(i).getString("name"));
-                                products.setName(jsonArray.getJSONObject(i).getString("name"));
+                                products.setName( jsonArray.getJSONObject(i).getString("name").substring(0,  jsonArray.getJSONObject(i).getString("name").lastIndexOf(".")));
                                 products.setImageUrl(url+jsonArray.getJSONObject(i).getString("name"));
                                 productsModel.add(products);
                                 Log.v("PRODUCTS+++++++++++++++",products.toString());
